@@ -1,4 +1,4 @@
-import { UserRole } from '../user.schema';
+import { UserRole } from '../../user.schema';
 
 export class UpdateUserDto {
   email?: string;
