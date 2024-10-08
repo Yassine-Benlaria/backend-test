@@ -998,6 +998,14 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.5.tgz#1ef302e01cf7d2b5a0fa526790c9123bf1d06690"
   integrity sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==
 
+"@types/mongoose-delete@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/mongoose-delete/-/mongoose-delete-1.0.6.tgz#044cd41eb878544b19d10ca948d1a41d42d10efb"
+  integrity sha512-8q5uYEZ68sd6Ray+DK7Ifs7vJnoMmnk6Ld5YhmXIDIEFbZNqpbWI4TTksUeLy4w4szDS/KiTTp/5eeyp4ILNfA==
+  dependencies:
+    "@types/node" "*"
+    mongoose "^5.11 || ^6 || ^7 || ^8"
+
 "@types/node@*":
   version "22.7.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-22.7.5.tgz#cfde981727a7ab3611a481510b473ae54442b92b"
@@ -3853,7 +3861,12 @@ mongodb@6.9.0:
     bson "^6.7.0"
     mongodb-connection-string-url "^3.0.0"
 
-mongoose@^8.7.0:
+mongoose-delete@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/mongoose-delete/-/mongoose-delete-1.0.2.tgz#9bc38773ee0c811864dc3d3dfff1fe8745a306c7"
+  integrity sha512-W+p9ULLiYHcEz77wQECp6gNnh2NcXf30KRIE3nAyjjsStqmBKJDL5eXTnX0xerGG2gCGx6mI7bO3+ch88tQ+tg==
+
+"mongoose@^5.11 || ^6 || ^7 || ^8", mongoose@^8.7.0:
   version "8.7.0"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-8.7.0.tgz#0f5377a4c3099702a5a00f5dccde2a092ca1c3b0"
   integrity sha512-rUCSF1mMYQXjXYdqEQLLlMD3xbcj2j1/hRn+9VnVj7ipzru/UoUZxlj/hWmteKMAh4EFnDZ+BIrmma9l/0Hi1g==
