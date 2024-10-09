@@ -24,7 +24,7 @@ export class GetCategoriesQuery {
   })
   @IsOptional()
   @IsNumber()
-  skip?: number = 1;
+  skip?: number = 0;
 
   @ApiProperty({
     description: 'The number of items to take',

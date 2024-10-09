@@ -5,11 +5,12 @@ import { Model } from 'mongoose';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { GetProductsQuery } from './dtos/get-products.dto';
 import { PaginatedResponse } from '../shared/utils/pagination';
+import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private productModel: Model<Product>,
+    @InjectModel(Product.name) private productModel: SoftDeleteModel<Product>,
   ) {}
 
   async create(dto: CreateProductDto): Promise<Product> {
@@ -57,6 +58,6 @@ export class ProductsService {
 
   async remove(id: string) {
     const filter = { _id: id };
-    return this.productModel.deleteOne(filter).exec();
+    return this.productModel.softDelete(filter);
   }
 }

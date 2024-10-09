@@ -5,11 +5,13 @@ import { Model } from 'mongoose';
 import { PaginatedResponse } from '../shared/utils/pagination';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { GetCategoriesQuery } from './dtos/get-categories.dto';
+import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectModel(Category.name) private categoryModel: Model<Category>,
+    @InjectModel(Category.name)
+    private categoryModel: SoftDeleteModel<Category>,
   ) {}
 
   async create(dto: CreateCategoryDto): Promise<Category> {
@@ -48,6 +50,6 @@ export class CategoriesService {
   }
   async remove(id: string) {
     const filter = { _id: id };
-    return this.categoryModel.deleteOne(filter).exec();
+    return this.categoryModel.softDelete(filter);
   }
 }

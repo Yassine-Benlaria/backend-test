@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Category } from '../categories/category.schema';
+import { softDeletePlugin } from 'soft-delete-plugin-mongoose';
 
 @Schema()
 export class Product extends Document {
@@ -24,4 +25,5 @@ export class Product extends Document {
   stock: number;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductSchema =
+  SchemaFactory.createForClass(Product).plugin(softDeletePlugin);
