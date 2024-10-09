@@ -1,45 +1,51 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserRole } from '../../user.schema';
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class UpdateUserBody {
   @ApiProperty({
     example: 'example@gmail.com',
     description: 'The email of the user',
   })
+  @IsOptional()
   @IsEmail()
-  @IsNotEmpty()
-  email: string;
+  email?: string;
 
   @ApiProperty({
     example: 'John',
     description: 'The first name of the user',
   })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  firstName: string;
+  firstName?: string;
 
   @ApiProperty({
     example: 'Wick',
     description: 'The last name of the user',
   })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  lastName: string;
+  lastName?: string;
 
   @ApiProperty({
     example: 'password',
     description: 'The password of the user',
   })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  password: string;
+  password?: string;
 
   @ApiProperty({
     example: '0666666666',
     description: 'The phone number of the user',
   })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  phone: string;
+  phone?: string;
 }

@@ -4,6 +4,8 @@ import { User } from './user.schema';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dtos/commands/create-user.dto';
 import { UpdateUserDto } from './dtos/commands/update-user.dto';
+import { GetUsersQuery } from './dtos/queries/get-users.query';
+import { PaginatedResponse } from '../shared/utils/pagination';
 
 @Injectable()
 export class UsersService {
@@ -11,11 +13,34 @@ export class UsersService {
 
   async create(dto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(dto);
-    return createdUser.save();
+    return await createdUser.save().catch((error) => {
+      //to handle duplicate key error
+      if (error.code === 11000) {
+        throw new Error('Email already exists');
+      }
+      throw error;
+    });
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async find(query: GetUsersQuery): Promise<PaginatedResponse<User>> {
+    const { id, email, firstName, lastName, phone, role, skip, take } = query;
+    const filter: any = {};
+
+    if (id) filter._id = id;
+    if (email) filter.email = { $regex: email, $options: 'i' };
+    if (firstName) filter.firstName = { $regex: firstName, $options: 'i' };
+    if (lastName) filter.lastName = { $regex: lastName, $options: 'i' };
+    if (phone) filter.phone = { $regex: phone, $options: 'i' };
+    if (role) filter.role = role;
+
+    const users = await this.userModel
+      .find(filter)
+      .skip(skip)
+      .limit(take)
+      .exec();
+
+    const total = await this.userModel.countDocuments(filter).exec();
+    return { data: users, meta: { skip, take, total } };
   }
 
   async findOne(id: string): Promise<User> {
