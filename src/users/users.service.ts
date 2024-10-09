@@ -4,7 +4,7 @@ import { User } from './user.schema';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { GetUsersQuery } from './dtos/get-users.query';
+import { GetUsersQuery } from './dtos/get-users.dto';
 import { PaginatedResponse } from '../shared/utils/pagination';
 
 @Injectable()

@@ -9,11 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UpdateUserBody } from './dtos/update-user.body';
-import { CreateUserBody } from './dtos/create-user.body';
 import { UserRole } from './user.schema';
 import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
-import { GetUsersQuery } from './dtos/get-users.query';
+import { GetUsersQuery } from './dtos/get-users.dto';
+import { CreateUserBody } from './dtos/create-user.dto';
+import { UpdateUserBody } from './dtos/update-user.dto';
 
 @Controller('users')
 export class UsersController {

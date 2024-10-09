@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Product } from './product.schema';
 import { Model } from 'mongoose';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { GetProductsQuery } from './dtos/get-products.query';
+import { GetProductsQuery } from './dtos/get-products.dto';
 import { PaginatedResponse } from '../shared/utils/pagination';
 
 @Injectable()

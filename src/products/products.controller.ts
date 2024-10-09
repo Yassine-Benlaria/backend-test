@@ -11,7 +11,7 @@ import {
 import { ProductsService } from './products.service';
 import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { CreateProductBody } from './dtos/create-product.dto';
-import { GetProductsQuery } from './dtos/get-products.query';
+import { GetProductsQuery } from './dtos/get-products.dto';
 import { updateProductBody } from './dtos/update-product.dto';
 
 @Controller('products')
