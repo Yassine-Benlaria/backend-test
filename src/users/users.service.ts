@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
 import { Model } from 'mongoose';
-import { CreateUserDto } from './dtos/commands/create-user.dto';
-import { UpdateUserDto } from './dtos/commands/update-user.dto';
-import { GetUsersQuery } from './dtos/queries/get-users.query';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { GetUsersQuery } from './dtos/get-users.query';
 import { PaginatedResponse } from '../shared/utils/pagination';
 
 @Injectable()

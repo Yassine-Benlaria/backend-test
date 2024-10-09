@@ -20,7 +20,7 @@ export class Product extends Document {
   })
   category: Category;
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: 0 })
   stock: number;
 }
 

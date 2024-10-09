@@ -1,4 +1,4 @@
-import { UserRole } from '../../user.schema';
+import { UserRole } from '../user.schema';
 import { IsOptional, IsString, IsEnum, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
