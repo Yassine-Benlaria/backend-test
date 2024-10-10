@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CreateCategoryBody } from './dtos/create-category.dto';
 import { GetCategoriesQuery } from './dtos/get-categories.dto';
 import { UpdateCategoryBody } from './dtos/update-category.dto';
@@ -20,6 +20,7 @@ import { UserRole } from '../users/user.schema';
 import { SetAllowedRoles } from '../auth/decorators/roles.decorator';
 
 @Controller('categories')
+@ApiTags('Categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

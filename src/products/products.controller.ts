@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CreateProductBody } from './dtos/create-product.dto';
 import { GetProductsQuery } from './dtos/get-products.dto';
 import { updateProductBody } from './dtos/update-product.dto';
@@ -21,6 +21,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { AuthUser } from '../auth/decorators/get-user.decorator';
 
 @Controller('products')
+@ApiTags('Products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 

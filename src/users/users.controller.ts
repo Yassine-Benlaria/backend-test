@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserRole } from './user.schema';
-import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { GetUsersQuery } from './dtos/get-users.dto';
 import { CreateUserBody } from './dtos/create-user.dto';
 import { UpdateUserBody } from './dtos/update-user.dto';
@@ -20,6 +20,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { SetAllowedRoles } from '../auth/decorators/roles.decorator';
 
 @Controller('users')
+@ApiTags('Users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @SetAllowedRoles(UserRole.ADMIN)
 export class UsersController {
