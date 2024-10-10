@@ -26,6 +26,8 @@ export class User extends Document {
 
   @Prop({ required: true, default: UserRole.MANAGER })
   role: UserRole;
+
+  comparePassword: (password: string) => Promise<boolean>;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

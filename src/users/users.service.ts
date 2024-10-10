@@ -6,6 +6,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { GetUsersQuery } from './dtos/get-users.dto';
 import { PaginatedResponse } from '../shared/utils/pagination';
+import { UserAlreadyExistsException } from './constants/exceptions';
 
 @Injectable()
 export class UsersService {
@@ -16,8 +17,9 @@ export class UsersService {
     return await createdUser.save().catch((error) => {
       //to handle duplicate key error
       if (error.code === 11000) {
-        throw new Error('Email already exists');
+        throw new UserAlreadyExistsException();
       }
+      console.log(error.code);
       throw error;
     });
   }

@@ -37,10 +37,10 @@ export class GetUsersQuery {
   @IsOptional()
   @IsNumber()
   @ApiProperty({ example: 0 })
-  skip: number = 0;
+  skip?: number = 0;
 
   @IsOptional()
   @IsNumber()
   @ApiProperty({ example: 10 })
-  take: number = 10;
+  take?: number = 10;
 }
