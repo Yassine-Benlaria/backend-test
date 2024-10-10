@@ -58,6 +58,35 @@ export class UsersService {
     return updatedUser;
   }
 
+  async updateRefreshToken(id: string, refreshToken: string) {
+    const filter = { _id: id };
+    const updatedUser = await this.userModel
+      .updateOne(filter, { refreshToken })
+      .exec();
+    if (updatedUser.modifiedCount === 0) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+    return updatedUser;
+  }
+
+  async removeRefreshToken(id: string) {
+    const filter = { _id: id };
+    const updatedUser = await this.userModel
+
+      .updateOne(filter, { refreshToken: null })
+      .exec();
+    if (updatedUser.modifiedCount === 0) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+    return updatedUser;
+  }
+
+  async findByRefreshToken(refreshToken: string) {
+    return this.userModel.findOne({
+      refreshToken,
+    });
+  }
+
   async remove(id: string) {
     const filter = { _id: id };
     const deleted = await this.userModel.deleteOne(filter).exec();

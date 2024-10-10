@@ -27,6 +27,9 @@ export class User extends Document {
   @Prop({ required: true, default: UserRole.MANAGER })
   role: UserRole;
 
+  @Prop()
+  refreshToken: string;
+
   comparePassword: (password: string) => Promise<boolean>;
 }
 
