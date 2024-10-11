@@ -38,6 +38,15 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Initial Admin Account
+
+When you first run the application, it will automatically create an initial admin account with the following credentials:
+
+- Email: admin@admin.admin
+- Password: admin
+
+**Important:** For security reasons, please change this password immediately after your first login.
+
 ## API Documentation
 
 When the application is running, you can access the Swagger API documentation by navigating to:
