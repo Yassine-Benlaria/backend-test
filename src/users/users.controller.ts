@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserRole } from './user.schema';
+import { User, UserRole } from './user.schema';
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { GetUsersQuery } from './dtos/get-users.dto';
 import { CreateUserBody } from './dtos/create-user.dto';
@@ -51,13 +51,18 @@ export class UsersController {
   @ApiQuery({ type: GetUsersQuery })
   @ApiOperation({ summary: 'Get users' })
   async getUsers(@Query() query: GetUsersQuery) {
-    return this.usersService.find(query);
+    const { data, meta } = await this.usersService.find(query);
+    return {
+      data: data.map((user) => this.removeSensitiveData(user)),
+      meta,
+    };
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a user by id' })
   async getUser(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    const user = await this.usersService.findOne(id);
+    return this.removeSensitiveData(user);
   }
 
   @Patch(':id')
@@ -71,5 +76,10 @@ export class UsersController {
   @ApiOperation({ summary: 'Delete a user by id' })
   async deleteUser(id: string) {
     return this.usersService.remove(id);
+  }
+
+  private removeSensitiveData(user: User) {
+    const { password, refreshToken, ...rest } = user.toObject();
+    return rest;
   }
 }
