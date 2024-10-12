@@ -3,11 +3,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { UserAlreadyExistsException } from './constants/exceptions';
 import { PaginatedResponse } from '../shared/utils/pagination';
 import { GetUsersQuery } from './dtos/get-users.dto';
-import { UserNotFoundException } from '../auth/contants/exceptions';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import {
+  UserAlreadyExistsException,
+  UserNotFoundException,
+} from '../shared/exceptions/exceptions';
 
 @Injectable()
 export class UsersRepository {
