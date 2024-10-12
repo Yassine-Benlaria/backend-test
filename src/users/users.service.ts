@@ -7,92 +7,41 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { GetUsersQuery } from './dtos/get-users.dto';
 import { PaginatedResponse } from '../shared/utils/pagination';
 import { UserAlreadyExistsException } from './constants/exceptions';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   async create(dto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(dto);
-    return await createdUser.save().catch((error) => {
-      //to handle duplicate key error
-      if (error.code === 11000) {
-        throw new UserAlreadyExistsException();
-      }
-      console.log(error.code);
-      throw error;
-    });
+    return await this.usersRepository.create(dto);
   }
 
   async find(query: GetUsersQuery): Promise<PaginatedResponse<User>> {
-    const { id, email, firstName, lastName, phone, role, skip, take } = query;
-    const filter: any = {};
-
-    if (id) filter._id = id;
-    if (email) filter.email = { $regex: email, $options: 'i' };
-    if (firstName) filter.firstName = { $regex: firstName, $options: 'i' };
-    if (lastName) filter.lastName = { $regex: lastName, $options: 'i' };
-    if (phone) filter.phone = { $regex: phone, $options: 'i' };
-    if (role) filter.role = role;
-
-    const users = await this.userModel
-      .find(filter)
-      .skip(skip)
-      .limit(take)
-      .exec();
-
-    const total = await this.userModel.countDocuments(filter).exec();
-    return { data: users, meta: { skip, take, total } };
+    return await this.usersRepository.find(query);
   }
 
   async findOne(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
+    return await this.usersRepository.findByIdOrFail(id);
   }
 
   async update(id: string, dto: UpdateUserDto) {
-    const filter = { _id: id };
-    const updatedUser = await this.userModel.updateOne(filter, dto).exec();
-    if (updatedUser.modifiedCount === 0) {
-      throw new NotFoundException(`User with id ${id} not found`);
-    }
-    return updatedUser;
+    return await this.usersRepository.update(id, dto);
   }
 
   async updateRefreshToken(id: string, refreshToken: string) {
-    const filter = { _id: id };
-    const updatedUser = await this.userModel
-      .updateOne(filter, { refreshToken })
-      .exec();
-    if (updatedUser.modifiedCount === 0) {
-      throw new NotFoundException(`User with id ${id} not found`);
-    }
-    return updatedUser;
+    return await this.usersRepository.updateRefreshToken(id, refreshToken);
   }
 
   async removeRefreshToken(id: string) {
-    const filter = { _id: id };
-    const updatedUser = await this.userModel
-
-      .updateOne(filter, { refreshToken: null })
-      .exec();
-    if (updatedUser.modifiedCount === 0) {
-      throw new NotFoundException(`User with id ${id} not found`);
-    }
-    return updatedUser;
+    return await this.removeRefreshToken(id);
   }
 
   async findByRefreshToken(refreshToken: string) {
-    return this.userModel.findOne({
-      refreshToken,
-    });
+    return this.usersRepository.findByRefreshToken(refreshToken);
   }
 
   async remove(id: string) {
-    const filter = { _id: id };
-    const deleted = await this.userModel.deleteOne(filter).exec();
-    if (deleted.deletedCount === 0) {
-      throw new NotFoundException(`User with id ${id} not found`);
-    }
-    return deleted;
+    return await this.usersRepository.remove(id);
   }
 }
