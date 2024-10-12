@@ -1,12 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { Injectable } from '@nestjs/common';
 import { User } from './user.schema';
-import { Model } from 'mongoose';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { GetUsersQuery } from './dtos/get-users.dto';
 import { PaginatedResponse } from '../shared/utils/pagination';
-import { UserAlreadyExistsException } from './constants/exceptions';
 import { UsersRepository } from './users.repository';
 
 @Injectable()

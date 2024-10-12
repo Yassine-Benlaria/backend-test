@@ -1,55 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Category } from './category.schema';
-import { Model } from 'mongoose';
 import { PaginatedResponse } from '../shared/utils/pagination';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { GetCategoriesQuery } from './dtos/get-categories.dto';
-import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
+import { CategoriesRepository } from './categories.repository';
 
 @Injectable()
 export class CategoriesService {
-  constructor(
-    @InjectModel(Category.name)
-    private categoryModel: SoftDeleteModel<Category>,
-  ) {}
+  constructor(private readonly categoriesRepository: CategoriesRepository) {}
 
   async create(dto: CreateCategoryDto): Promise<Category> {
-    const createdCategory = new this.categoryModel(dto);
-    return await createdCategory.save();
+    return await this.categoriesRepository.create(dto);
   }
 
   async find(
     command: GetCategoriesQuery,
   ): Promise<PaginatedResponse<Category>> {
-    const filter: any = {};
-    if (command.name) filter.name = { $regex: command.name, $options: 'i' };
-    if (command.description)
-      filter.description = { $regex: command.description, $options: 'i' };
-
-    const categories = await this.categoryModel
-      .find(filter)
-      .skip(command.skip)
-      .limit(command.take)
-      .exec();
-
-    const total = await this.categoryModel.countDocuments(filter).exec();
-
-    return {
-      data: categories,
-      meta: { skip: command.skip, take: command.take, total },
-    };
+    return await this.categoriesRepository.find(command);
   }
 
   async update(id: string, dto: CreateCategoryDto) {
-    const filter = { _id: id };
-    const updatedCategory = await this.categoryModel
-      .updateOne(filter, dto)
-      .exec();
-    return updatedCategory;
+    return await this.categoriesRepository.update(id, dto);
   }
+
   async remove(id: string) {
-    const filter = { _id: id };
-    return this.categoryModel.softDelete(filter);
+    return await this.categoriesRepository.remove(id);
   }
 }
