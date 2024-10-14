@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { InitialAdminSeed } from './database/initial-admin.seed';
+import { AllExceptionsFilter } from './shared/exceptions/exception-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,7 @@ async function bootstrap() {
     }),
   );
 
+  app.useGlobalFilters(new AllExceptionsFilter());
   //swagger
   const config = new DocumentBuilder()
     .setTitle('Product Management API')
