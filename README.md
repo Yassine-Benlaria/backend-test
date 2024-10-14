@@ -17,7 +17,7 @@ $ yarn install
 Before running the application, you need to set up your environment variables. Create a `.env` file in the root directory of the project and add the following variables:
 
 ```
-MONGODB_URI = (example: mongodb://localhost:27017/)
+MONGO_URI = (example: mongodb://localhost:27017/)
 MONGO_DB_NAME = database_name
 JWT_SECRET = your_jwt_secret_key
 REFRESH_TOKEN_SECRET = your_refresh_token_secret
